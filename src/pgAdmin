@@ -1,0 +1,104 @@
+CREATE TABLE account(
+	id SERIAL PRIMARY KEY,
+	account_number INTEGER NOT NULL,
+	money DOUBLE PRECISION
+);
+CREATE TABLE university(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(120)
+);
+CREATE TABLE programming_language(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(50) NOT NULL
+);
+CREATE TABLE memory(
+    id SERIAL PRIMARY KEY,
+    ram INTEGER NOT NULL,
+    ssd DOUBLE PRECISION NOT NULL
+);
+CREATE TABLE computer(
+	id SERIAL PRIMARY KEY,
+	model VARCHAR(33) NOT NULL,
+    cpu VARCHAR(40) NOT NULL,
+    id_memory INT REFERENCES memory(id)
+);
+CREATE TABLE book(
+	id SERIAL PRIMARY KEY,
+    name VARCHAR(79) NOT NULL,
+    author VARCHAR(120) NOT NULL
+);
+CREATE TABLE country(
+	id SERIAL PRIMARY KEY,
+	country_name VARCHAR(50) NOT NULL
+);
+CREATE TABLE sim_card(
+	id SERIAL PRIMARY KEY,
+	number INTEGER NOT NULL,
+	operator VARCHAR(30) NOT NULL
+);
+CREATE TABLE car(
+	id SERIAL PRIMARY KEY,
+	model VARCHAR(40),
+	date_of_issue DATE NOT NULL
+);
+CREATE TABLE programmer(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,
+	age INTEGER NOT NULL,
+	email VARCHAR(80) UNIQUE,
+	id_account INT REFERENCES account(id),
+	id_programming_language INT REFERENCES programming_language(id),
+	id_laptop INT REFERENCES computer(id),
+	id_book INT REFERENCES book(id),
+	id_country INT REFERENCES country(id),
+	id_sim_card INT REFERENCES sim_card(id),
+	id_car INT REFERENCES car(id)
+);
+
+INSERT INTO account(account_number, money)
+VALUES (111,33000.99),
+(222, 1200.7),
+(333, 500);
+
+INSERT INTO university(name)
+VALUES ('MIT'),
+('AUCA'),
+('Columbia');
+
+INSERT INTO programming_language(name)
+VALUES ('java'),
+('python'),
+('c++');
+
+INSERT INTO memory(ram, ssd)
+VALUES (8,128.9),
+(16, 256.0),
+(32, 500.7);
+
+INSERT INTO computer(model, cpu, id_memory)
+VALUES ('MacBook', 'core i7', 1),
+('HP', 'core i5', 3);
+
+INSERT INTO book(name, author)
+VALUES ('451 fahrenheit', 'Rey Bradbery'),
+('Harry Potter', 'Joanne Rowling');
+
+INSERT INTO country(country_name)
+VALUES ('Kyrgyzstan'),
+('USA'),
+('France');
+
+INSERT INTO sim_card(number, operator)
+VALUES (1111, 'beeline'),
+(2323, 'o!');
+
+INSERT INTO car(model, date_of_issue)
+VALUES ('AMG', 2001-01-23),
+('BMW', 1997-07-18);
+
+INSERT INTO programmer(name, age, email, id_account,
+					   id_programming_language,
+					   id_laptop, id_book, id_country,
+					   id_sim_card, id_car)
+VALUES ('Kurstan', 19, 'kurs@gmail.com',
+	   2, 1, 1, 2, 3, 1, 2);
